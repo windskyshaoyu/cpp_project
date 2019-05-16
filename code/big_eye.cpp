@@ -18,7 +18,7 @@ Mat eyesBigger(Mat input_image,double howBig)
 {
     qDebug()<<"eyesBigger";
     //String eyes_cascade_name = "./haarcascade_eye_tree_eyeglasses.xml"; // eye classifier 的路径
-    String eyes_cascade_name = "/Users/rose/Desktop/unipicture0505/haarcascade_eye_tree_eyeglasses.xml";
+    String eyes_cascade_name = "/Users/MacBook/Desktop/unipicture0515/haarcascade_eye_tree_eyeglasses.xml";
     qDebug()<<"ss"<<input_image.type();
     string store_address;
     std::vector<Rect> eyes; // 眼睛的
@@ -35,7 +35,6 @@ Mat eyesBigger(Mat input_image,double howBig)
     eyes_cascade.detectMultiScale(frame_gray, eyes, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
     if (eyes.size() > 0)
     {
-
             cout << "检测到眼睛";
 
             for (int i = 0; i < eyes.size(); i++)

@@ -50,7 +50,7 @@ main_window::main_window(QWidget *parent) :
     pal.setBrush(QPalette::Background,QBrush(QPixmap(":/images/background4.jpeg")));
     setPalette(pal);
     //ui->verticalLayout_2->setGeometry(500);
-    ui->scrollArea_Background->setVisible(false); //胡然把background相关代码加上以后要把这行删掉
+ //  ui->scrollArea_Background->setVisible(false); //胡然把background相关代码加上以后要把这行删掉
 }
 
 main_window::~main_window()
@@ -158,7 +158,7 @@ void main_window::setMainButtons(){
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Sticker()));//mia
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Mosaic()));//mia
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Frame()));//mia
-    connect(return_Button, SIGNAL(released()), this, SLOT(ButtonShow()));//mia
+    //connect(return_Button, SIGNAL(released()), this, SLOT(ButtonShow()));//mia
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_FilterColor_Button()));//mia
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));//mia
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));//mia
@@ -166,46 +166,63 @@ void main_window::setMainButtons(){
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));//mia
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Rotate_Button()));//mia
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_background()));//yh
+    connect(return_Button, SIGNAL(released()), this, SLOT(ButtonShow()));//mia
+    connect(return_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));//mia
+    connect(return_Button, SIGNAL(released()), this, SLOT(Hide_text()));//mia
+    connect(return_Button, SIGNAL(released()), this, SLOT(initialization()));//mia
 
     connect(Tool_Button, SIGNAL(released()), this, SLOT(ButtonHide()));//mia
     connect(Tool_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));//mia
     connect(Tool_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));//mia
     //connect(Tool_Button, SIGNAL(released()), this, SLOT(ButtonHide()));//mia
+    connect(Tool_Button, SIGNAL(released()), this, SLOT(Hide_text()));//mia
     connect(Tool_Button, SIGNAL(released()), this, SLOT(Show_Tool()));//mia
 
     connect(Filter_Button, SIGNAL(released()), this, SLOT(ButtonHide()));//mia
     connect(Filter_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));//mia
     connect(Filter_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));//mia
+    connect(Filter_Button, SIGNAL(released()), this, SLOT(Hide_text()));//mia
     connect(Filter_Button, SIGNAL(released()), this, SLOT(Show_Filter()));//mia
 
     connect(Sticker_Button, SIGNAL(released()), this, SLOT(ButtonHide()));//mia
     connect(Sticker_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));//mia
     connect(Sticker_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));//mia
+    connect(Sticker_Button, SIGNAL(released()), this, SLOT(Hide_text()));//mia
     connect(Sticker_Button, SIGNAL(released()), this, SLOT(Show_Sticker()));//mia
 
     //connect(Bigeye_Button, SIGNAL(released()), this, SLOT(ButtonHide()));//mia
     connect(Bigeye_Button, SIGNAL(released()), this, SLOT(Show_eyeSlider()));//mia
     connect(Bigeye_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));//mia
+    connect(Bigeye_Button, SIGNAL(released()), this, SLOT(Hide_text()));//mia
     connect(Bigeye_Button, SIGNAL(released()), this, SLOT(Big_eye()));
 
     connect(Mosaic_Button, SIGNAL(released()), this, SLOT(ButtonHide()));//mia
     connect(Mosaic_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));//mia
     connect(Mosaic_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));//mia
+    connect(Mosaic_Button, SIGNAL(released()), this, SLOT(Hide_text()));//mia
     connect(Mosaic_Button, SIGNAL(released()), this, SLOT(Show_Mosaic()));
 
     connect(Frame_Button, SIGNAL(released()), this, SLOT(ButtonHide()));//mia
     connect(Frame_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));//mia
     connect(Frame_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));//mia
+    connect(Frame_Button, SIGNAL(released()), this, SLOT(Hide_text()));//mia
     connect(Frame_Button, SIGNAL(released()), this, SLOT(Show_Frame()));
 
     connect(Collage_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));//mia
+    connect(Collage_Button, SIGNAL(released()), this, SLOT(Hide_text()));//mia
     connect(Collage_Button, SIGNAL(released()), this, SLOT(Show_collageButton()));//mia
     connect(Collage_Button, SIGNAL(released()), this, SLOT(Collage()));
 
     connect(Colorchange_Button, SIGNAL(released()), this, SLOT(ButtonHide()));//mia
     connect(Colorchange_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));//mia
+    connect(Colorchange_Button, SIGNAL(released()), this, SLOT(Hide_text()));//mia
     connect(Colorchange_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));//mia
     connect(Colorchange_Button, SIGNAL(released()), this, SLOT(Show_background()));
+
+    connect(Text_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));//mia
+    connect(Text_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));//mia
+    connect(Text_Button, SIGNAL(released()), this, SLOT(Show_text()));
+    connect(Text_Button, SIGNAL(released()), this, SLOT(text()));
     //connect(Colorchange_Button, SIGNAL(released()), this, SLOT(Set_background()));
     //胡然要搜索Colorchange_Button,把connect(...)的加在这里，保留上面Hide_collageButton()这行新的，再上面一行Hide_eyeSlider()如果你那边重复有了就删掉，写一遍就可以
 
@@ -447,10 +464,31 @@ void main_window::setAddition(){
     spinBox_eye->setVisible(false);
     slider_eye->setVisible(false);
 
-    //change background
-    connect(red_back, SIGNAL(released()), this, SLOT(back_flag()));
-    connect(white_back, SIGNAL(released()), this, SLOT(back_flag()));
-    connect(blue_back, SIGNAL(released()), this, SLOT(back_flag()));
+    //text
+    ui->horizontalLayout->addWidget(textEdt);
+//    QPalette p_text = textEdt->palette();
+//    p_text.setBrush(QPalette::Base,QBrush(QColor(255,0,0,0)));
+//    textEdt->setPalette(p_text);
+//    textEdt->setTextColor(Qt::white);
+//    textEdt->setText("Text");
+//    textEdt->setAlignment( Qt::AlignCenter );
+//    textEdt->setVisible(false);
+
+//    p_text.setColor(QPalette::Text,Qt::white);
+//    textEdt->setPalette(p_text);
+
+    textEdt->setStyleSheet("color:black");//文本颜色
+    textEdt->setStyleSheet("background-color:white");//背景色
+    textEdt->setVisible(false);
+
+    ui->horizontalLayout->addWidget(spinBoxText);
+    spinBoxText->setRange(0,60);
+    spinBoxText->setVisible(false);
+
+//    //change background
+//    connect(red_back, SIGNAL(released()), this, SLOT(back_flag()));
+//    connect(white_back, SIGNAL(released()), this, SLOT(back_flag()));
+//    connect(blue_back, SIGNAL(released()), this, SLOT(back_flag()));
 
     //collage
     ui->horizontalLayout->addWidget(collage_h);
@@ -630,6 +668,8 @@ void main_window::display_image(QString filename)
 
     *scaledimg = image->scaled(500,500,Qt::KeepAspectRatio);
     *main_pic = *scaledimg;
+    //disconnect
+    initialization();
     display_screen();
 
 }
@@ -653,8 +693,10 @@ bool main_window::CanUndo(){
 }
 
 void main_window::DeleteAction(){
+    delete main_pic;
     main_pic = new QImage;
     display_screen();
+
 }
 
 void main_window::DownloadAction(){
@@ -1174,22 +1216,29 @@ void main_window:: Show_eyeSlider(){
 void main_window:: Hide_eyeSlider(){
     spinBox_eye->setVisible(false);
     slider_eye->setVisible(false);
+    spinBox_eye->disconnect(this);
+    slider_eye->disconnect(this);
 }
 
 void main_window::Big_eye(){
     spinBox_eye->disconnect(this);
     slider_eye->disconnect(this);
     cout << "start big eye...."<<endl;
+    cout << "1187 hang"<<endl;
     Temp_main_pic = QImage2cvMat(*main_pic).clone(); //暂存原始图片
+    cout << "1189 hang"<<endl;
     connect(spinBox_eye, SIGNAL(valueChanged(int)), this, SLOT(temp_BigEye()));
+    cout << "1191 hang"<<endl;
 
 }
 
 void main_window::temp_BigEye(){
+    cout << "1196 hang"<<endl;
     float eyeSize_value = (float(spinBox_eye->value()))/100+1;
     qDebug()<<"eyeSize_value"<<eyeSize_value;
     Mat bigEye_img; //加上一个贴纸后的图
     bigEye_img = eyesBigger(Temp_main_pic, eyeSize_value);   //把这个bigeye()改成你要调用的加贴纸函数,去掉上一行
+    cout << "1201 hang"<<endl;
     *main_pic=cvMat2QImage(bigEye_img);
     display_screen();
     cout << "eye size:"<<endl;
@@ -1540,6 +1589,9 @@ void main_window:: Set_background(){
     Vlayout_Background->addWidget(red_back);
     Vlayout_Background->addWidget(blue_back);
     Vlayout_Background->addWidget(white_back);
+    red_back->setButtonSize(90,80);
+    blue_back->setButtonSize(90,80);
+    white_back->setButtonSize(90,80);
     red_back->setButtonPicture(red_Img);
     red_back->setPressPicture(red_Img);
     blue_back->setButtonPicture(blue_Img);
@@ -1548,7 +1600,15 @@ void main_window:: Set_background(){
     white_back->setPressPicture(white_Img);
     ui->scrollArea_Background->setVisible(false);
 
+    //change background
+    connect(red_back, SIGNAL(released()), this, SLOT(back_flag()));
+    connect(white_back, SIGNAL(released()), this, SLOT(back_flag()));
+    connect(blue_back, SIGNAL(released()), this, SLOT(back_flag()));
+
+
 }
+
+
 void main_window:: Hide_background(){
 
     ui->scrollArea_Background->setVisible(false);
@@ -1705,10 +1765,105 @@ void main_window::Collage(){
 
 //Collage end+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+//initial========================================================
+void main_window::initialization(){
+    spinBox1->disconnect(this);
+    slider1->disconnect(this);
+    spinBox2->disconnect(this);
+    slider2->disconnect(this);
+    spinBox_blur->disconnect(this);
+    slider_blur->disconnect(this);
+    spinBox_saturation->disconnect(this);
+    slider_saturation->disconnect(this);
+    spinBox_sticker->disconnect(this);
+    slider_sticker->disconnect(this);
+    spinBox_eye->disconnect(this);
+    slider_eye->disconnect(this);
+    spinBox_eye->disconnect(this);
+    slider_eye->disconnect(this);
+    spinBox1->setValue(50);
+    spinBox2->setValue(0);
+    spinBox_blur->setValue(0);
+    spinBox_saturation->setValue(0);
+    spinBox_sticker->setValue(15);
+    spinBox_eye->setValue(5);
+    main_screen->set_m_text(false);
+    main_screen->set_m_addsticker(false);
+    main_screen->set_m_mosaic(false);
+    spinBoxText->disconnect(this);
+    textEdt->disconnect(this);
+
+}
+
+//initial end================================================================
+
+
+//text====================================================================
+//void main_window::textStart(){
+//    if (sender()==Text_Button){
+//        main_screen->m_text = true;
+//        }
+//}
+void main_window:: Show_text(){
+    textEdt->setVisible(true);
+    spinBoxText->setVisible(true);
+    spinBoxText->setValue(20);
+}
+
+void main_window:: Hide_text(){
+    textEdt->setVisible(false);
+    spinBoxText->setVisible(false);
+}
+void main_window::text(){
+    spinBoxText->disconnect(this);
+    textEdt->disconnect(this);
+//    QPainter painter(& *main_pic); //为这个QImage构造一个QPainter
+//    painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+//    QPen pen = painter.pen();
+//    pen.setColor(Qt::red);
+//    QFont font = painter.font();
+//    font.setBold(true);//加粗
+//    font.setPixelSize(50);//改变字体大小
+//    painter.setPen(pen);
+//    painter.setFont(font);
+//    //painter.drawText(text_point.x(),text_point.y(),"Hello");
+//    QString text_content;
+//   text_content = textEdt->toPlainText();
+//    painter.drawText(230,230,text_content);
+////    cout<< "draw "<<main_screen->text_x<<endl;
+////    cout<< "draw:"<< main_screen->text_y<<endl;
+    qDebug()<<"texting";
+    main_screen->set_m_text(true);
+//    textEdt->setTextColor(Qt::white);
+    connect( textEdt, SIGNAL(returnPressed()), this, SLOT( TextEdit()) );
+    connect( spinBoxText, SIGNAL(valueChanged(int)), this, SLOT( TextSIzeEdit()) );
+    //main_screen->set_text_content( textEdt->toPlainText());
+   // main_screen->text_size =
+    //display_screen();
+}
+
+void main_window::TextEdit(){
+    main_screen->set_text_content( textEdt->text());
+}
+
+void main_window::TextSizeEdit(){
+    std::cout<<"changed size"<<endl;
+    int textSize_value = spinBoxText->value();
+    std::cout<< "text size "<<textSize_value<<  endl;
+    main_screen->set_text_size( textSize_value);
+}
+
+
+//text end====================================================================
 
 
 
 //Mouse ===================================================================
+//void main_window::mousePressEvent(QGraphicsSceneMouseEvent* event){
+//    text_x = event->scenePos().x();
+//    text_y = event->scenePos().y();
+//}
+
 void main_window::mouseMoveEvent(QMouseEvent *event)
 {
     if (m_bPressed)
@@ -1723,10 +1878,12 @@ void main_window::mouseReleaseEvent(QMouseEvent *event)
 
 void main_window::mousePressEvent(QMouseEvent *event)
 {
+//    text_point=event->pos();
     if (event->button() == Qt::LeftButton)
     {
         m_bPressed = true;
         m_point = event->pos();
+
     }
 }
 

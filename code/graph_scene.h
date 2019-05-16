@@ -19,6 +19,7 @@
 #include "ui_main_window.h"
 #include <QMouseEvent>
 #include<opencv2/opencv.hpp>
+#include <QString>
 
 using namespace cv;
 using namespace std;
@@ -42,6 +43,10 @@ class GraphScreen : public QGraphicsScene
         void set_m_mosaic(bool state);
         void mosaic(Point mosaicPTL, Point mosaicPTR, int neighbourHood);
         void set_mosaic_size(int size);
+        void set_m_text(bool state);
+        void add_text(int mx,int my, int size,QString text_content);
+        void set_text_content(QString content);
+        void set_text_size(int size);
 
         void Crop_r(int x, int y);
         void Crop_m(int x, int y);
@@ -59,6 +64,10 @@ class GraphScreen : public QGraphicsScene
 //        QString sticker_5_path;
 //        QString sticker_6_path;
 //        QString sticker_7_path;
+//        void text();//mia
+//        int text_x;
+//        int text_y;
+//        bool m_text = false;
 
 
 
@@ -66,10 +75,13 @@ class GraphScreen : public QGraphicsScene
         QImage *ScreenPic;
         bool m_addsticker = false;
         bool m_mosaic = false;
+        bool m_text = false;
         bool m_crop = false;
         Mat sticker_img;
         int sticker_size = 50;
         int mosaic_size = 10;
+        int text_size = 20;
+        QString text_content = "Text";
 
 
     protected:

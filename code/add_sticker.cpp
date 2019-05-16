@@ -5,7 +5,7 @@
 #include <opencv2/highgui.hpp>
 #include <iostream>
 #include <unistd.h>
-using std::string;
+using std:: string;
 
 using namespace cv;
 
@@ -33,8 +33,9 @@ void GraphScreen::add_sticker(int mx,int my, int size){
 }
 
 void GraphScreen::set_m_addsticker(bool state){
+    qDebug()<<"m_addsticker"<<m_addsticker;
     m_addsticker = state;
-    qDebug()<<state;
+    qDebug()<<"set_m_addsticker"<<state;
 }
 
 void GraphScreen::set_sticker_size(int size){
@@ -65,7 +66,7 @@ void GraphScreen::select_sticker(int sticker_idx){
 //        if ((buf = (char *)malloc((size_t)size)) != NULL)
 //            ptr = getcwd(buf, (size_t)size);
 //        qDebug()<<*ptr;
-        sticker_img = cv::imread("/Users/rose/Desktop/sticker/s1.jpg");
+        sticker_img = cv::imread("/Users/MacBook/Desktop/unipicture0515/images/s1.jpg");
     }
     else if (sticker_idx == 2){
         //sticker_img = imread(sticker_2_path);

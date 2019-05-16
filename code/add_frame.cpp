@@ -17,25 +17,25 @@ Mat addframe(Mat img, int frame_num){
     if (frame_num == 1)
     {
         parameter = 10;
-        frame = imread("/Users/rose/Downloads/unipicture0428/images/heart.jpg",IMREAD_COLOR);
+        frame = imread("/Users/MacBook/Desktop/unipicture0515/images/heart.jpg",IMREAD_COLOR);
     }
 
     if (frame_num == 2)
     {
         parameter = 100;
-        frame = imread("/Users/rose/Downloads/unipicture0428/images/Gauty.jpg",IMREAD_COLOR);
+        frame = imread("/Users/MacBook/Desktop/unipicture0515/images/Gauty.jpg",IMREAD_COLOR);
     }
 
     if (frame_num == 3)
     {
         parameter = 10;
-        frame = imread("/Users/rose/Downloads/unipicture0428/images/COCOa.jpg",IMREAD_COLOR);
+        frame = imread("/Users/MacBook/Desktop/unipicture0515/images/COCOa.jpg",IMREAD_COLOR);
     }
 
     if (frame_num == 4)
     {
         parameter = 30;
-        frame = imread("/Users/rose/Downloads/unipicture0428/images/Vintage.jpg",IMREAD_COLOR);
+        frame = imread("/Users/MacBook/Desktop/unipicture0515/images/Vintage.jpg",IMREAD_COLOR);
     }
 
     resize(frame, frame, Size(img.cols,img.rows), 0, 0, INTER_LINEAR);
