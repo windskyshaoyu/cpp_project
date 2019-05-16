@@ -745,11 +745,9 @@ void main_window::DoAction(){
 
 void main_window::RedoAction(){
     if (!redo_stack.empty()){
-
     undostack_count++;
     *main_pic = redo_stack.top();
     QImage image_copy = main_pic->copy();
-    qDebug()<<"redo"<<image_copy.format();
     undo_stack.push(image_copy);
     redo_stack.pop();
     redostack_count--;
@@ -892,10 +890,12 @@ void main_window::Tool_blackwhite(){
 }
 
 void main_window:: Tool_crop(){
+    qDebug()<<"crop";
     Mat img = QImage2cvMat(*main_pic);
-    Mat cp_img = crop(img);
-    *main_pic = cvMat2QImage(cp_img);
-    display_screen();
+    //Mat cp_img = crop(img);
+    main_screen->set_m_crop(true);
+    //*main_pic = cvMat2QImage(cp_img);
+
 
 }
 
@@ -1278,27 +1278,30 @@ void main_window:: Set_Mosaic(){
         ui->scrollArea_Mosaic->setVisible(true);
     }
     void main_window::Mosaic(){
+        qDebug()<<"Mosaic()";
         int size;
+        main_screen->set_m_mosaic(true);
         cout << "start use mosaic...."<<endl;
         if (sender()==small_mosaic){
-            size =0;
+            size = 3;
             cout<< "choose small mosaic"<<endl;
         }
         else if (sender()==median_mosaic){
-            size = 1;
+            size = 10;
             cout<< "choose median mosain"<<endl;
         }
         else if (sender()==large_mosaic){
-            size = 2;
+            size = 20;
             cout<< "choose large mosaic"<<endl;
         }
 
-        Mat img = QImage2cvMat(*main_pic); //暂存原始图片
+        main_screen->set_mosaic_size(size);
 
-        Mat cf_img= img;
-        //Mat cf_img = mosaicfunction(img, size);
-        *main_pic = cvMat2QImage(cf_img);
-        display_screen();
+        //Mat img = QImage2cvMat(*main_pic); //暂存原始图片
+
+        //Mat cf_img = main_screen->mosaic(img, size);
+        //*main_pic = cvMat2QImage(cf_img);
+        //display_screen();
 
     }
 
