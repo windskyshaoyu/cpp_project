@@ -18,12 +18,12 @@ void GraphScreen::mouseMoveEvent(QGraphicsSceneMouseEvent* event){
 }
 
 void GraphScreen::mousePressEvent(QGraphicsSceneMouseEvent* event){
-    int mx = event->scenePos().x();
-    int my = event->scenePos().y();
-
+//    int mx = event->scenePos().x();
+//    int my = event->scenePos().y();
+    qDebug()<<m_addsticker;
     this->addPixmap(QPixmap::fromImage(*ScreenPic));
     qDebug()<<"Qgraphpress"<<event->scenePos();
-    if(m_addsticker){
+ if(m_addsticker){
     int mx = event->scenePos().x();
     int my = event->scenePos().y();
     add_sticker(mx, my, sticker_size);
@@ -39,7 +39,16 @@ void GraphScreen::mousePressEvent(QGraphicsSceneMouseEvent* event){
 
         qDebug()<<mx<<"  "<<my<<" when press ";
         mosaicPtL = Point(mx, my);
+        this->addPixmap(QPixmap::fromImage(*ScreenPic));
 
+    }
+
+    else if (m_text){
+        qDebug()<<"begin text";
+        int mx = event->scenePos().x();
+        int my = event->scenePos().y();
+        add_text(mx,my,text_size, text_content);
+        this->addPixmap(QPixmap::fromImage(*ScreenPic));
     }
 }
 
@@ -129,3 +138,9 @@ QImage GraphScreen::cvMat2QImage(const cv::Mat& mat)
     }
 
 }
+
+
+//void GraphScreen::set_m_addsticker(bool state){
+//    m_text = state;
+
+//}
