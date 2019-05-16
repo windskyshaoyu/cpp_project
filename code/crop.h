@@ -9,6 +9,5 @@
 using namespace cv;
 using namespace std;
 
-void onMouse(int event, int x, int y, int flags, void *);
 Mat crop(Mat org);
 #endif // CROP_H

@@ -14,6 +14,16 @@ void GraphScreen::display(QImage* image){
 
 //move mouse event
 void GraphScreen::mouseMoveEvent(QGraphicsSceneMouseEvent* event){
+    if (m_crop){
+
+            qDebug()<<"begin m_crop";
+            int mx = event->scenePos().x();
+            int my = event->scenePos().y();
+
+            qDebug()<<mx<<"  "<<my<<" when move";
+            Crop_m(mx,my);
+            this->addPixmap(QPixmap::fromImage(*ScreenPic));
+        }
     //qDebug()<<"Qgraphmove"<<event->scenePos();
 }
 
@@ -23,36 +33,54 @@ void GraphScreen::mousePressEvent(QGraphicsSceneMouseEvent* event){
 
     this->addPixmap(QPixmap::fromImage(*ScreenPic));
     qDebug()<<"Qgraphpress"<<event->scenePos();
+    qDebug()<<m_crop;
     if(m_addsticker){
     int mx = event->scenePos().x();
     int my = event->scenePos().y();
     add_sticker(mx, my, sticker_size);
     this->addPixmap(QPixmap::fromImage(*ScreenPic));
-    qDebug()<<"Qgraphpress"<<event->scenePos();
+    qDebug()<<"addsticker"<<event->scenePos();
     }
 
     else if (m_mosaic){
-
         qDebug()<<"begin mosaik";
         int mx = event->scenePos().x();
         int my = event->scenePos().y();
 
         qDebug()<<mx<<"  "<<my<<" when press ";
         mosaicPtL = Point(mx, my);
+    }
+    else if (m_crop){
 
+        qDebug()<<"begin m_crop";
+        int mx = event->scenePos().x();
+        int my = event->scenePos().y();
+
+        qDebug()<<mx<<"  "<<my<<" when press ";
+        Crop_p(mx,my);
+        this->addPixmap(QPixmap::fromImage(*ScreenPic));
     }
 }
 
 
 void GraphScreen::mouseReleaseEvent(QGraphicsSceneMouseEvent* event){
     if(m_mosaic){
+        qDebug()<<"Qgraphrelease"<<event->scenePos();
         int mx = event->scenePos().x();
         int my = event->scenePos().y();
         mosaicPtR = Point(mx, my);
-        mosaic(mosaicPtR, mosaicPtR, mosaic_size);
+        mosaic(mosaicPtL, mosaicPtR, mosaic_size);
         this->addPixmap(QPixmap::fromImage(*ScreenPic));
-        qDebug()<<"Qgraphpress"<<event->scenePos();
-  }
+
+    }
+        else if (m_crop){
+        int mx = event->scenePos().x();
+        int my = event->scenePos().y();
+        Crop_r(mx,my);
+        this->addPixmap(QPixmap::fromImage(*ScreenPic));
+        set_m_crop(false);
+        }
+
 }
 
 //format change between QImage & cvMat

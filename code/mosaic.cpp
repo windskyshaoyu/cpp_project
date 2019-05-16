@@ -10,7 +10,7 @@ using namespace cv;
 //Point mosaicPtL(0,0); //马赛克时左键按下时坐标
 //Point mosaicPtR(0,0);
 
-void GraphScreen::mosaic(Point mosaicPt, Point mosaicPtR, int neighbourHood){
+void GraphScreen::mosaic(Point mosaicPtL, Point mosaicPtR, int neighbourHood){
 
     RNG rng;
     int randomNum; //邻域内随机值
@@ -52,11 +52,14 @@ void GraphScreen::mosaic(Point mosaicPt, Point mosaicPtR, int neighbourHood){
         for (int j = 0; j < mosaicPtR.x - mosaicPtL.x; j += neighbourHood)
         {
 
+
+
             //模糊后的值为整个模糊block的均值
             randomNum = rng.uniform(-neighbourHood / 2, neighbourHood / 2);
 
             //根据neighbourhood与顶点坐标来模糊选定区域
             Rect rect = Rect(j + neighbourHood + mosaicPtL.x, i + neighbourHood + mosaicPtL.y, neighbourHood, neighbourHood);
+
 
 
             Mat roi = imageSourceCopy(rect);
@@ -69,7 +72,6 @@ void GraphScreen::mosaic(Point mosaicPt, Point mosaicPtR, int neighbourHood){
             roiCopy.copyTo(roi);
         }
     }
-
     Mat cloneimg = imageSourceCopy.clone();
     *ScreenPic = cvMat2QImage(cloneimg);
 
