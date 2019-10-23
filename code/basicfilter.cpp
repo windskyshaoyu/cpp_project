@@ -1,16 +1,13 @@
 #include "basicfilter.h"
 
-
 Mat old(Mat &srcImg){
     Mat src;
     srcImg.copyTo(src);
     int width = src.cols;
     int heigh = src.rows;
-    // Mat img2(src.size(),CV_8UC3);
     for (int y = 0; y < heigh; y++)
     {
         uchar* srcImage = src.ptr<uchar>(y);
-        // uchar* tarImg  = img2.ptr<uchar>(y);
         for (int x = 0; x < width; x++)
         {
             double oldB = srcImage[3*x];
@@ -52,11 +49,9 @@ Mat magic(Mat &srcImg){
     srcImg.copyTo(src);
     int width = src.cols;
     int heigh = src.rows;
-    // Mat img2(src.size(),CV_8UC3);
     for (int y = 0;y < heigh;y++)
     {
         uchar* srcImage = src.ptr<uchar>(y);
-        // uchar* tarImg=img2.ptr<uchar>(y);
         for (int x = 0; x < width; x++)
         {
             float oldB = srcImage[3*x];
@@ -93,16 +88,13 @@ Mat magic(Mat &srcImg){
     return src;
 }
 
-
 Mat silence(Mat &srcImg){
     Mat src;
     srcImg.copyTo(src);
     int width=src.cols;
     int heigh=src.rows;
-    // Mat img2(src.size(),CV_8UC3);
     for (int y = 0; y < heigh; y++){
         uchar* srcImage=src.ptr<uchar>(y);
-        // uchar* tarImg=img2.ptr<uchar>(y);
         for (int x = 0; x < width; x++){
             float oldB=srcImage[3*x];
             float oldG=srcImage[3*x+1];
@@ -139,7 +131,6 @@ Mat silence(Mat &srcImg){
     }
     return src;
 }
-
 
 Mat exposure(Mat &srcImg){
     Mat src;
@@ -207,11 +198,9 @@ Mat comic(Mat &srcImg){
     srcImg.copyTo(src);
     int width=src.cols;
     int heigh=src.rows;
-//    Mat img2(src.size(),CV_8UC3);
     for (int y=0; y<heigh; y++)
         {
             uchar* srcImage  = src.ptr<uchar>(y);
-//            uchar* P1  = img2.ptr<uchar>(y);
             for (int x=0; x<width; x++)
             {
                 float oldB=srcImage[3*x];
@@ -250,5 +239,3 @@ Mat comic(Mat &srcImg){
     normalize(gray,gray,255,0,NORM_MINMAX);
     return gray;
 }
-
-

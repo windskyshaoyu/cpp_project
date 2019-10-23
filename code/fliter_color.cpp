@@ -11,7 +11,7 @@ using namespace std;
 static Mat org, pic;
 static int Hmin[8] = {0, 325, 8, 28, 65, 160, 240, 280};
 static int Hmax[8] = {15, 360, 45, 70, 165, 240, 300, 340};
-// Red-0, Red-1, Orange-2, Yellow-3, Green-4, Blue-5, Purple-6, Pink-7
+
 //Input: Red-1, Orange-2, Yellow-3, Green-4, Blue-5, Purple-6, Pink-7
 
 Mat filter_color(Mat org, int mode){ // 01 2 3 4 5 6 7
@@ -23,7 +23,6 @@ Mat filter_color(Mat org, int mode){ // 01 2 3 4 5 6 7
     Mat B(org.size(), CV_8UC1);
     Mat I(org.size(), CV_8UC1);
     Mat bw(org.size(), CV_8UC1);
-    //Mat pic(org.size(), CV_32FC3);
 
     Mat rgb[] = {B, G, R};
     cv::split(dst, rgb);
@@ -75,7 +74,6 @@ Mat filter_color(Mat org, int mode){ // 01 2 3 4 5 6 7
             }
         }
     }
-
 
     return pic;
 }

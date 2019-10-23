@@ -1,3 +1,10 @@
+/*
+ * File: button.h
+ * --------------
+ * This file exports the Button class, which include
+ * methods to set button picture and size.
+ */
+
 #ifndef BUTTON_H
 #define BUTTON_H
 
@@ -15,14 +22,12 @@ public:
     void setButtonPicture(QPixmap *pic);
     void setPressPicture(QPixmap *pic);
     void setButtonSize(int width, int height);
-//    void setMode(int mode);
 
 private:
     QPixmap *ButtonPicture = new QPixmap();
     QPixmap *PressPicture = new QPixmap();
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
-//    int mode = 0;
 
 };
 

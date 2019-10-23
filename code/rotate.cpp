@@ -32,9 +32,7 @@ Mat rotate(Mat src, int mode)  {
         flip(src, dst, -1);
         return dst;
         break;
-
     default:
         break;
     }
 }
-

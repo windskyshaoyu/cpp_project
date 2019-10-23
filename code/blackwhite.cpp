@@ -1,12 +1,11 @@
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <iostream>
+
 using namespace cv;
 using namespace std;
 
-// mode 0 you zao dian.....!
 Mat blackwhite(Mat org){
-    //Mat org = imread(address);
     Mat dst(org.size(), CV_8UC3); //Mat float and channel 3.
     org.convertTo(dst, CV_8UC3);
 
@@ -30,12 +29,6 @@ Mat blackwhite(Mat org){
 
         }
     }
-//    BW_out=BW_out/255;
 
     return BW_out;
-//    imshow("black-white", BW_out);
-//    //imwrite("out.jpg", BW_out*255);
-//    waitKey();
-//    cout<<"All is well."<<endl;
 }
-

@@ -20,19 +20,12 @@ void GraphScreen::add_text(int mx,int my, int size,QString text_content){
     font.setPixelSize(size);//改变字体大小
     painter.setPen(pen);
     painter.setFont(font);
-//    QString text_content;
-//   text_content = textEdt->toPlainText();
-//    text_content = "Hello";
     painter.drawText(mx,my,text_content);
-//    cout<< "draw "<<main_screen->text_x<<endl;
-//    cout<< "draw:"<< main_screen->text_y<<endl;
-
-  //  display_screen();
 
 }
 
 void GraphScreen::set_m_text(bool state){
-    m_text = state;//bug
+    m_text = state;
     qDebug()<<state;
 }
 void GraphScreen::set_text_size(int size){

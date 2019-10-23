@@ -1,4 +1,3 @@
-
 #include "button.h"
 
 Button::Button(QWidget *parent)
@@ -6,7 +5,6 @@ Button::Button(QWidget *parent)
 {
     this->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Preferred );
     this->setStyleSheet("background:transparent");
-//    this->setStyleSheet("color: white");
     this->setIconSize(QSize(120,40));
 }
 
@@ -27,9 +25,6 @@ void Button::setButtonSize(int width,int height){
     this->setIconSize(QSize(width, height));
 }
 
-//void Button::setMode(int mode){
-//    this->mode = mode;
-//}
 
 void Button::mousePressEvent(QMouseEvent *event){
     Q_UNUSED(event);
@@ -42,14 +37,3 @@ void Button::mouseReleaseEvent(QMouseEvent *event){
     this->setIcon(QIcon(*ButtonPicture));
     emit released();
 }
-
-
-
-//void Button::enterEvent(QEvent *event){
-//    Q_UNUSED(event);
-//    this->setIcon(QIcon(*hoverPicture));
-//}
-//void Button::leaveEvent(QEvent *event){
-//    Q_UNUSED(event);
-//    this->setIcon(QIcon(*buttonPicture));
-//}

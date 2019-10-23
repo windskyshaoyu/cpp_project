@@ -8,37 +8,17 @@ This program adjust the saturation.
 using namespace std;
 using namespace cv;
 static Mat dst, tmp;
-//const int satTrackbarMaxValue = 100;
-//static int satTrackValue;
-
-//void on_saturationTrackBar(int, void*);
 
 Mat saturation(Mat org, int value)
 {
 
     dst = Mat::zeros(org.size(), CV_32FC3);
-
     org.convertTo(dst, CV_32FC3);
-
     tmp = Mat::zeros(org.size(), CV_32FC3);
     org.convertTo(tmp, CV_32FC3);
 
-//    dst = Mat::zeros(org.size(), CV_8UC3);
-
-//    org.convertTo(dst, CV_8UC3);
-
-//    tmp = Mat::zeros(org.size(), CV_8UC3);
-//    org.convertTo(tmp, CV_8UC3);
-
-    //namedWindow("Processing", WINDOW_AUTOSIZE);
-    //satTrackValue = 0;
-    //char satTrackName[50];
-    //sprintf(satTrackName, "saturation", satTrackbarMaxValue);
-    //createTrackbar(satTrackName, "saturation", &satTrackValue, satTrackbarMaxValue, on_saturationTrackBar);
-
     // define the iterator of the input image
     MatIterator_<Vec3f> inp_begin, inp_end;
-
     inp_begin = tmp.begin<Vec3f>();
     inp_end = tmp.end<Vec3f>();
 
@@ -83,12 +63,7 @@ Mat saturation(Mat org, int value)
         }
     }
 
-//    dst2 = Mat(org.size(),CV_8UC3);
-    //dst = dst/255;
-
     Mat dst8 = dst.clone();
     dst8.convertTo(dst8, CV_8UC3);
-
     return dst8;
-
 }

@@ -2,41 +2,38 @@
 #include <opencv2/core/core.hpp>
 #include "advancedfilter.h"
 
-
 Mat neon(Mat &srcImg){
     Mat src;
     srcImg.copyTo(src);
     int width=src.cols;
     int heigh=src.rows;
-//    Mat img2(src.size(),CV_8UC3);
 
     for(int y = 0; y < heigh-1; y++){
         uchar* srcImage = src.ptr<uchar>(y);
-//        uchar* tarImg = img2.ptr<uchar>(y);
         for(int x = 0; x < width-1; x++){
 
-            //当前像素的RGB分量
+            // RGB Value of current pixel
             int oldB = srcImage[x*3];
             int oldG = srcImage[x*3+1];
             int oldR = srcImage[x*3+2];
 
-            //同行下一个像素的RGB分量
+            // RGB Value of pixel in next col
             int oldB2 = srcImage[(x+1)*3];
             int oldG2 = srcImage[(x+1)*3+1];
             int oldR2 = srcImage[(x+1)*3+2];
 
-            //指针移到下一行
+            // Move the pointer to next row
             srcImage = src.ptr<uchar>(y+1);
 
-            //同列正下方的像素的RGB分量
+            // RGB of the same column in next row
             int oldB3 = srcImage[x*3];
             int oldG3 = srcImage[x*3+1];
             int oldR3 = srcImage[x*3+2];
 
-            //指针移回来
+            // Move pointer back
             srcImage = src.ptr<uchar>(y);
 
-            //计算新的RGB分量的值 (May change 10 to other const)
+            // Calculate new RGB (May change 10 to other const)
             int newR = static_cast<int>(10*sqrt((oldR-oldR2)*(oldR-oldR2) + (oldR-oldR3)*(oldR-oldR3)));
             int newG = static_cast<int>(10*sqrt((oldG-oldG2)*(oldG-oldG2) + (oldG-oldG3)*(oldG-oldG3)));
             int newB = static_cast<int>(10*sqrt((oldB-oldB2)*(oldB-oldB2) + (oldB-oldB3)*(oldB-oldB3)));
@@ -159,12 +156,10 @@ Mat softLight(Mat &srcImg) {
     return src;
 }
 
-
-//Dest =(Src * (100 - Opacity) + (Src + 2 * GuassBlur(EPFFilter(Src) - Src + 128) - 255) * Opacity) /100
-//Mat beauty(Mat &srcImg, int beautyParam, int GuassBlurParam){
 Mat beauty(Mat &srcImg){
     int beautyParam =3;
     int GuassBlurParam=1;
+
     Mat src;
     srcImg.copyTo(src);
 
@@ -236,16 +231,16 @@ Mat sketch(Mat &srcImg){
     int heigh=src.rows;
     Mat gray0,gray1;
 
-    //去色
+    // Remove color
     cvtColor(src,gray0,COLOR_BGR2GRAY);
 
-    //反色
+    // opposite color
     addWeighted(gray0,-1,NULL,0,255,gray1);
 
-    //高斯模糊,高斯核的Size与最后的效果有关
+    // Gaussian blur
     GaussianBlur(gray1,gray1,Size(11,11),0);
 
-    //融合：颜色减淡
+    // Fuse operation
     Mat img(gray1.size(),CV_8UC1);
     for (int y=0; y<heigh; y++){
         uchar* grayImage0 = gray0.ptr<uchar>(y);
@@ -261,7 +256,6 @@ Mat sketch(Mat &srcImg){
 }
 
 
-//Mat strike(Mat &srcImg, int strikeParam){
 Mat strike(Mat &srcImg){
     int strikeParam=25;
     Mat src;
@@ -269,7 +263,7 @@ Mat strike(Mat &srcImg){
     int width=src.cols;
     int heigh=src.rows;
 
-    int strikeNum = strikeParam;//num：均值力度;
+    int strikeNum = strikeParam;//num：the strenth of avg operation
 
     Mat src1u[3];
     split(src,src1u);
@@ -322,7 +316,6 @@ Mat strike(Mat &srcImg){
 }
 
 
-//Mat volution(Mat &srcImg, int volutionParam){
 Mat volution(Mat &srcImg){
     int volutionParam=20;
     Mat src;
@@ -330,7 +323,7 @@ Mat volution(Mat &srcImg){
     int width = src.cols;
     int heigh = src.rows;
 
-    int volutionNum = volutionParam;//num：均值力度;
+    int volutionNum = volutionParam;//num：the strength of avg operation;
 
     Mat src1u[3];
     split(src,src1u);
@@ -370,7 +363,7 @@ Mat volution(Mat &srcImg){
     return src;
 }
 
-//Mat wave(Mat &srcImg, int Aparam, int deltaParam){
+
 Mat wave(Mat &srcImg){
     int Aparam=10;
     int deltaParam=10;
@@ -381,8 +374,8 @@ Mat wave(Mat &srcImg){
     int heigh = src.rows;
 
     double angle = 0.0;
-    int deltaI = deltaParam;	//波浪周期;
-    int A = Aparam;		//波浪振幅;
+    int deltaI = deltaParam;	//period;
+    int A = Aparam;		//Amplitude;
 
     for (int y=0; y<heigh; y++){
         int changeX = static_cast<int>(A*sin(angle));
@@ -394,7 +387,7 @@ Mat wave(Mat &srcImg){
                 srcImage[3*x+1]=srcImageCopy[3*(x+changeX)+1];
                 srcImage[3*x+2]=srcImageCopy[3*(x+changeX)+2];
             }
-             //每行开始和结束的空白区;
+             //empty place;
             else if(x<=changeX){
                 srcImage[3*x]=srcImageCopy[0];
                 srcImage[3*x+1]=srcImageCopy[1];
@@ -424,7 +417,6 @@ Mat expand(Mat &srcImg){
 
     for (int y=0; y<heigh; y++){
         uchar* srcImage = src.ptr<uchar>(y);
-//        uchar *srcImageCopy = src2.ptr<uchar>(y);
         for (int x=0; x<width; x++){
             int distance = static_cast<int>(norm(Point(x,y)-center));
             if (distance<expandRate)
@@ -480,7 +472,6 @@ Mat shrink(Mat &srcImg){
     }
     return src;
 }
-
 
 Mat embossment(Mat &srcImg){
     Mat src, src2;

@@ -1,3 +1,11 @@
+/*
+ * File: graph_scene.h
+ * -------------------
+ * This file exports the GraphScreen class, which
+ * is a subclass of QGraphicsScene. It is responsible
+ * for mouse control on the canvas.
+ */
+
 #ifndef GRAPH_SCENE_H
 #define GRAPH_SCENE_H
 
@@ -33,6 +41,7 @@ class GraphScreen : public QGraphicsScene
 
     public:
 
+        QImage *ScreenPic;
         void display(QImage * image);
         void add_sticker(int mx,int my,int size);
         void set_m_addsticker(bool state);
@@ -57,22 +66,10 @@ class GraphScreen : public QGraphicsScene
 
         Point mosaicPtL; //马赛克时左键按下时坐标
         Point mosaicPtR;
-//        QString sticker_1_path = "./Sticker1.png";
-//        QString sticker_2_path;
-//        QString sticker_3_path;
-//        QString sticker_4_path;
-//        QString sticker_5_path;
-//        QString sticker_6_path;
-//        QString sticker_7_path;
-//        void text();//mia
-//        int text_x;
-//        int text_y;
-//        bool m_text = false;
-
 
 
     private:
-        QImage *ScreenPic;
+
         bool m_addsticker = false;
         bool m_mosaic = false;
         bool m_text = false;
@@ -89,7 +86,5 @@ class GraphScreen : public QGraphicsScene
         void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
         void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 };
-
-
 
 #endif // GRAPH_SCENE_H

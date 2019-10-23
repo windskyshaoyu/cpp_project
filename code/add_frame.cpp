@@ -2,55 +2,88 @@
 #include<opencv2/opencv.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include "add_frame.h"
+#include <QtCore>
+#include <QWidget>
+
 using namespace std;
 using namespace cv;
+
+Mat QImage2cvMatframe(QImage image) {
+    cv::Mat mat;
+    cv::Mat dst;
+
+    switch(image.format())
+    {
+    case QImage::Format_ARGB32:
+    case QImage::Format_RGB32:
+    case QImage::Format_ARGB32_Premultiplied:
+
+        image = image.convertToFormat(QImage::Format_RGB888);
+        mat = cv::Mat(image.height(), image.width(), CV_8UC3, (void*)image.constBits(), image.bytesPerLine());
+        cv::cvtColor(mat, dst, COLOR_BGR2RGB);
+        break;
+    case QImage::Format_RGB888:
+        mat = cv::Mat(image.height(), image.width(), CV_8UC3, (void*)image.constBits(), image.bytesPerLine());
+        cv::cvtColor(mat, dst, COLOR_BGR2RGB);
+        break;
+    case QImage::Format_Indexed8:
+        mat = cv::Mat(image.height(), image.width(), CV_8UC1, (void*)image.constBits(), image.bytesPerLine());
+        break;
+    }
+    return dst;
+
+}
+
 
 
 
 Mat addframe(Mat img, int frame_num){
 
-    Mat frame1, frame2, frame3, frame4;
+   // Mat frame1, frame2, frame3, frame4;
 
     int parameter = 10;
-
-
     if (frame_num == 1)
     {
         parameter = 10;
-        frame = imread("/Users/MacBook/Desktop/unipicture0515/images/heart.jpg",IMREAD_COLOR);
+        QImage *frameImage1;
+        frameImage1 = new QImage(":/images/heart.jpg");
+        frame = QImage2cvMatframe(*frameImage1);
     }
 
     if (frame_num == 2)
     {
-        parameter = 100;
-        frame = imread("/Users/MacBook/Desktop/unipicture0515/images/Gauty.jpg",IMREAD_COLOR);
+        parameter = 30;
+        QImage *frameImage2;
+        frameImage2 = new QImage(":/images/Gauty.jpg");
+        frame = QImage2cvMatframe(*frameImage2);
     }
 
     if (frame_num == 3)
     {
         parameter = 10;
-        frame = imread("/Users/MacBook/Desktop/unipicture0515/images/COCOa.jpg",IMREAD_COLOR);
+        QImage *frameImage3;
+        frameImage3 = new QImage(":/images/COCOa.jpg");
+        frame = QImage2cvMatframe(*frameImage3);
     }
 
     if (frame_num == 4)
     {
-        parameter = 30;
-        frame = imread("/Users/MacBook/Desktop/unipicture0515/images/Vintage.jpg",IMREAD_COLOR);
+        parameter = 100;
+        QImage *frameImage4;
+        frameImage4 = new QImage(":/images/Vintage.jpg");
+        frame = QImage2cvMatframe(*frameImage4);
     }
 
     resize(frame, frame, Size(img.cols,img.rows), 0, 0, INTER_LINEAR);
     cvtColor(frame,mask,COLOR_BGR2GRAY);
     bitwise_not(mask, mask);
-//    imshow("mask",mask);
     threshold(mask, mask, parameter, 255, THRESH_BINARY);
     frame.copyTo(img,mask);
     return img.clone();
-
 }
 
 
 Mat addframe_cv(Mat img, int mode){
-
     top = int (0.15*img.rows);
     bottom = static_cast<int> (0.15*img.rows);
     int left = static_cast<int> (0.15*img.cols);
@@ -82,10 +115,3 @@ Mat addframe_cv(Mat img, int mode){
     }
     return dst;
 }
-
-
-
-
-
-
-

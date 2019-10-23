@@ -108,6 +108,18 @@
         <file>images/fr_Vintage.png</file>
         <file>images/fr_White.png</file>
         <file>images/white.png</file>
+        <file>images/crop_confirm_press.png</file>
+        <file>images/crop_confirm.png</file>
+        <file>images/s1.jpg</file>
+        <file>images/COCOa.jpg</file>
         <file>images/heart.jpg</file>
+        <file>images/Gauty.jpg</file>
+        <file>images/Vintage.jpg</file>
+        <file>images/s2.jpg</file>
+        <file>images/s3.jpg</file>
+        <file>images/s4.jpg</file>
+        <file>images/s5.jpg</file>
+        <file>images/s6.jpeg</file>
+        <file>images/haarcascade_eye_tree_eyeglasses.xml</file>
     </qresource>
 </RCC>

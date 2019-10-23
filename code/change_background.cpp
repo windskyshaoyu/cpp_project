@@ -12,11 +12,17 @@ using namespace cv;
 using namespace std;
 using namespace cv::xfeatures2d;
 
+
+/*
+ * Implementation Note: changeBackground
+ * -------------------------
+ * this method take the image as the input and the chosen color_flag from the user
+ * and then it will change the background of this identification photo to the corresponding
+ * color user choose.
+ *
+*/
 Mat changeBackground(Mat image,int color_flag) {
     Mat src =  image;
-//    imshow("src", src);
-    //加载数据
-
 
     //初始化图片背景的长度与宽度
     int width = src.cols;
@@ -24,13 +30,12 @@ Mat changeBackground(Mat image,int color_flag) {
     int samplecount = width * height;
     int dims = src.channels();
 
-
     //行数为src的像素点数，列数为通道数，每列数据分别为src的bgr，从上到下 从左到右顺序读数据,把数据读取后传递给“points”
     Mat points(samplecount, dims, CV_32F, Scalar(10));
     int ind = 0;
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
-            ind = row * width + col;//
+            ind = row * width + col;
             Vec3b bgr = src.at<Vec3b>(row, col);
             points.at<float>(ind, 0) = static_cast<int>(bgr[0]);
             points.at<float>(ind, 1) = static_cast<int>(bgr[1]);
@@ -79,27 +84,17 @@ Mat changeBackground(Mat image,int color_flag) {
         }
     }
 
-
-//预览dst 与mask
-//    imshow("dst", dst);
-//    imshow("mask", dst);
-
-
     //腐蚀+高斯模糊
     Mat k = getStructuringElement(MORPH_RECT, Size(3, 3));
     erode(mask, mask, k);
     GaussianBlur(mask, mask, Size(3, 3), 0, 0);
-
-
-//    //预览高斯模糊之后的结果
-//    imshow("gaosimohu", mask);
 
     //通道混合
     RNG rng(12345);
 
 
 
-// !!!! 调整这个来改变颜色
+//调整这个来改变颜色
     Vec3b color; //填充进背景的颜色 默认白色 调三通道配比改变颜色
     if(color_flag == 0){
         color[0] = 255;//rng.uniform(0, 255);
@@ -155,17 +150,6 @@ Mat changeBackground(Mat image,int color_flag) {
         }
     }
     cout << "time=" << (getTickCount() - time) / getTickFrequency() << endl;
-//    imshow("backgroud repalce", result);
-//    waitKey(0);
+
     return  result;
-
-
 }
-
-//int main(){
-//    Mat img = imread("/Users/wangdediannao/Desktop/cpp\ project/sample.jpg");
-//    Mat result = moveBackground(img,1);
-//    imshow("ss",result);
-//    waitKey(0);
-
-//}

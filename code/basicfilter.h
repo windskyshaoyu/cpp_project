@@ -15,6 +15,4 @@ Mat exposure(Mat &srcImg);
 
 Mat comic(Mat &srcImg);
 
-
-
 #endif // BASICFILTER_H
